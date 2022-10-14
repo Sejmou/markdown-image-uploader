@@ -20,25 +20,24 @@ const Popup = () => {
       document.onpaste = async (evt) => {
         const file = evt.clipboardData?.files[0];
         if (file) {
-          console.log(file);
+          const headers = new Headers();
+          // for anonymous uploads, we could just use this...
+          // headers.append('Authorization', `Client-ID ${secrets.CLIENT_ID}`);
+          //... this is how we do a upload in the name of the currently logged in user
+          headers.append('Authorization', `Bearer ${authData.access_token}`);
 
-          const body = new FormData();
-          body.append('file', new Blob([await file.arrayBuffer()]));
-          body.append('fileName', file.name);
-          body.append('publicKey', secrets.PUBLIC_KEY);
-          body.append(
-            'expire',
-            (Math.floor(Date.now() / 1000) + 60 * 59).toString()
-          );
+          const formdata = new FormData();
+          formdata.append('image', new Blob([await file.arrayBuffer()]));
 
-          fetch('https://upload.imagekit.io/api/v1/files/upload', {
-            body,
-            headers: {
-              Authorization: 'Basic eW91cl9wcml2YXRlX2FwaV9rZXk6',
-              'Content-Type': 'multipart/form-data',
-            },
+          fetch('https://api.imgur.com/3/image', {
             method: 'POST',
-          });
+            headers: headers,
+            body: formdata,
+            redirect: 'follow',
+          })
+            .then((response) => response.json())
+            .then((result) => console.log(result))
+            .catch((error) => console.log('error', error));
         }
       };
     }
