@@ -1,6 +1,6 @@
 {
   "name": "markdown-image-uploader",
-  "version": "4.3.5",
+  "version": "0.1.0",
   "description": "A Chrome extension for quickly uploading images and creating a image markdown import statement",
   "license": "MIT",
   "repository": {

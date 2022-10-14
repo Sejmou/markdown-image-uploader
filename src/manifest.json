@@ -13,7 +13,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*", "<all_urls>"],
+      "matches": ["https://imgur.com/*"],
       "js": ["contentScript.bundle.js"],
       "css": ["content.styles.css"]
     }
@@ -25,5 +25,5 @@
       "matches": []
     }
   ],
-  "permissions": ["clipboardRead"]
+  "permissions": ["clipboardRead", "identity", "storage"]
 }
