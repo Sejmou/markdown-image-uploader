@@ -3,8 +3,12 @@ import '../../assets/styles/tailwind.css';
 // @ts-ignore
 import secrets from 'secrets'; // works at runtime, need @ts-ignore as a workaround: https://github.com/lxieyang/chrome-extension-boilerplate-react/issues/67
 
+import Input from './Input';
+
 const Popup = () => {
   const [authData, setAuthData] = useState<{ [key: string]: any }>();
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
     const getAuthData = async () => {
@@ -28,6 +32,9 @@ const Popup = () => {
 
           const formdata = new FormData();
           formdata.append('image', new Blob([await file.arrayBuffer()]));
+          console.log({ title, description });
+          if (title) formdata.append('title', title);
+          if (description) formdata.append('description', description);
 
           fetch('https://api.imgur.com/3/image', {
             method: 'POST',
@@ -41,7 +48,7 @@ const Popup = () => {
         }
       };
     }
-  }, [authData]);
+  }, [authData, title, description]);
 
   return (
     <div className="h-screen w-screen flex gap-2 justify-center items-center flex-col">
@@ -49,7 +56,27 @@ const Popup = () => {
         Copy and upload an image from your clipboard
       </h2>
       {authData?.access_token ? (
-        <span>Hit Ctrl + V to copy an image from your clipboard</span>
+        <>
+          <span>Hit Ctrl + V to copy an image from your clipboard</span>
+          <Input
+            onChange={(evt) => {
+              setTitle(evt.target.value);
+            }}
+            id="title"
+            type="text"
+            label="Title"
+            placeholder="(Optional) title..."
+          />
+          <Input
+            onChange={(evt) => {
+              setDescription(evt.target.value);
+            }}
+            id="description"
+            type="text"
+            label="Description"
+            placeholder="(Optional) description..."
+          />
+        </>
       ) : (
         <span>
           Please{' '}
