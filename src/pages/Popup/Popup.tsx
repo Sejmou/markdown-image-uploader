@@ -43,7 +43,16 @@ const Popup = () => {
             redirect: 'follow',
           })
             .then((response) => response.json())
-            .then((result) => console.log(result))
+            .then(async (obj) => {
+              console.log('received API response', obj);
+              const { link, description } = obj.data;
+              if (link) {
+                console.log('writing markdown import to clipboard');
+                await navigator.clipboard.writeText(
+                  `![${description || ''}](${link})`
+                );
+              }
+            })
             .catch((error) => console.log('error', error));
         }
       };

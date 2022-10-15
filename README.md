@@ -1,6 +1,6 @@
 # Markdown Image Uploader
 
-In this repo, I want to create a Chrome extension that allows you to quickly upload images from your clipboard (or, in the future maybe also local files) to an image hosting platform and generate a markdown image import statement immediately after.
+This is a Chrome extension that allows you to quickly upload images from your clipboard (or, in the future maybe also local files) to an image hosting platform and generate a markdown image import statement immediately after.
 
 ## Technologies used
 
