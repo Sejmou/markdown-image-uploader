@@ -1,6 +1,6 @@
 # Markdown Image Uploader
 
-This is a Chrome extension that allows you to quickly upload images from your clipboard (or, in the future maybe also local files) to an image hosting platform and generate a markdown image import statement immediately after.
+This is a Chrome extension that allows you to quickly upload images from your clipboard (or, in the future maybe also local files) to [Imgur](https://imgur.com/) and generate a markdown image import statement for them.
 
 ## Technologies used
 
@@ -20,20 +20,34 @@ The rest of this readme is a copy of the template repo.
 
 ## Installing and Running
 
-### Procedures:
+### Local development setup
 
-1. Check if your [Node.js](https://nodejs.org/) version is >= **14**.
+As this extension is not yet published to the Chrome Web Store, you have to do a bunch of stuff yourself:
+
+1. Make sure [Node.js](https://nodejs.org/) is installed on your system and its version is >= **14**.
 2. Clone this repository.
 3. Change the package's `name`, `description`, and `repository` fields in `package.json`.
 4. Change the name of your extension on `src/manifest.json`.
 5. Run `npm install` to install the dependencies.
 6. Run `npm start`
-7. Load your extension on Chrome following:
+7. This extension uses the Imgur API. You need to register this extension [here](https://api.imgur.com/oauth2/addclient) to obtain a client ID and secret (you can pick the option without a callback URL). For more details, check out the [docs](https://apidocs.imgur.com/) (see also the "Register an application" section).
+8. Once you obtained the client ID and secret, create a `secrets.development.js` file with the following content (obviously inserting your ID and secret):
+
+   ```
+   const secrets = {
+     CLIENT_ID: 'your_client_id',
+     CLIENT_SECRET: 'your_client_secret',
+   };
+
+   export default secrets;
+   ```
+
+9. Load your extension on Chrome following:
    1. Access `chrome://extensions/`
    2. Check `Developer mode`
    3. Click on `Load unpacked extension`
    4. Select the `build` folder.
-8. Happy hacking.
+10. The extension should now be accessible :)
 
 ## Structure
 
